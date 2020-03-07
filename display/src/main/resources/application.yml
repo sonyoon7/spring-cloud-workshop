@@ -11,13 +11,23 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 3000
+            timeoutInMilliseconds: 5000
       circuitBreaker:
         requestVolumeThreshold: 1   # Minimum number of request to calculate circuit breaker's health. default 20
         errorThresholdPercentage: 50 # Error percentage to open circuit. default 50
 
 product:
   ribbon:
-    listOfServers: localhost:8082,localhost:7777
+    #eureka를 통해서 자동으로 서버를 가죠오게 됨 listOfServer지움
+#    listOfServers: localhost:8082,localhost:7777
     MaxAutoRetries: 0
     MaxAutoRetriesNextServer: 1
+
+#남의 서버의 정보를 가지로 와서 로컬 즉 메모리에 저장하고 있음 , 자신의 주소 등록/제거
+# rinbbon 에서는 eureka client 주소를  라운드 로빈으로 로드발란싱 함
+#eureka client가 eureka server에 자신을 등록할 때 'spring.application.name' 이름을 사용
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    server-url: http://127.0.0.1:8761/eureka # default

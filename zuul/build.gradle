@@ -7,6 +7,9 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
+
+
     }
 }
 
@@ -27,6 +30,9 @@ repositories {
 
 dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile("org.springframework.cloud:spring-cloud-starter-netflix-zuul")
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+    compile('org.springframework.retry:spring-retry:1.2.2.RELEASE')
 }
 
 dependencyManagement {

@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: zuul
+
+server:
+  port: 8765
+
+zuul:
+
+  route:
+    product:
+      path: /products/**
+      serviceId: product
+      stripPrefix: false
+    display:
+      path: displays/**
+      serviceId: display
+      stripPrefix: false
+#  유레카 등록된 서비스 별로 THREAD 생성
+#  ribbon-isolation-strategy: thread
+#  thread-pool:
+#    use-separate-thread-pools: true
+#    thread-pool-key-prefix: zuulgw
+
+  hystrix:
+    command:
+      default:
+        execution:
+          isolation:
+            thread:
+              timeoutInMilliseconds: 50000
+#      product:
+#        execution:
+#          isolation:
+#            thread:
+#              timeoutInMilliseconds: 100000
+#    threadpool:
+#      zuul-product:
+#        coresize: 30
+#        maximumSize: 100
+#        allowMaximumSizeToDivergeFromCoreSize: true
+#      zuul-display:
+#        coresize: 30
+#        maximumSize: 100
+#        allowMaximumSizeToDivergeFromCoreSize: true
+
+
+
+eureka:
+  instance:
+    non-secure-port: ${server.port}
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
